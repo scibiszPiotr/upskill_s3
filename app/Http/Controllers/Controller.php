@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Aws\S3\S3Client;
+use Aws\Exception\AwsException;
 use Aws\Sdk;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -16,23 +17,40 @@ class Controller extends BaseController
 
     public function form()
     {
-        $sdk = new Sdk([
+        $client = new S3Client([
+            'version' => 'latest',
             'region' => env('AWS_DEFAULT_REGION'),
-            'version' => 'latest'
         ]);
-        $client = $sdk->createS3();
+        $bucket = '';
 
-        $expiry = "+10 minutes";
-        $fileName = fake()->firstName;
+        $formInputs = ['acl' => 'public-read'];
 
-        $cmd = $client->getCommand('PutObject', [
-            'Bucket' => config('filesystems.disks.s3.bucket'),
-            'Key' => $fileName,
-        ]);
+        $options = [
+            ['acl' => 'public-read'],
+            ['bucket' => config('filesystems.disks.s3.bucket')],
+            ['starts-with', '$key', 'user/eric/'],
+        ];
 
-        $request = $client->createPresignedRequest($cmd, $expiry);
+        $expires = '+2 hours';
 
-        return response()->view('form', ['url' => (string)$request->getUri(), 'fileName' => $fileName], 201);
+        $postObject = new \Aws\S3\PostObjectV4(
+            $client,
+            $bucket,
+            $formInputs,
+            $options,
+            $expires
+        );
+
+        $formAttributes = $postObject->getFormAttributes();
+
+        $formInputs = $postObject->getFormInputs();
+        //
+        //dd($formAttributes, $formInputs);
+
+        return response()->view('form', [
+            'url' => $formAttributes['action'],
+            'formAttr' => $formInputs
+        ], 201);
     }
 
     public function getList(): \Illuminate\Http\JsonResponse

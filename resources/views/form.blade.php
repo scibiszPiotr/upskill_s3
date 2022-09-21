@@ -16,6 +16,13 @@
             <form action="{{ $url }}" method="POST" enctype="multipart/form-data">
                 <div class="row">
 
+                    <input type="hidden" name="key" value="{{ $formAttr['key']}}" />
+                    <input type="hidden" name="x-amz-algorithm" value="{{ $formAttr['X-Amz-Algorithm']}}" />
+                    <input type="hidden" name="x-amz-credential" value="{{ $formAttr['X-Amz-Credential']}}" />
+                    <input type="hidden" name="x-amz-date" value="{{$formAttr['X-Amz-Date']}}" />
+                    <input type="hidden" name="policy" value="{{$formAttr['Policy']}}" />
+                    <input type="hidden" name="x-amz-signature" value="{{$formAttr['X-Amz-Signature']}}" />
+
                     <div class="col-md-6">
                         <input type="file" name="file" class="form-control">
                     </div>
