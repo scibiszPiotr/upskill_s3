@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Aws\S3\S3Client;
 use Aws\Sdk;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -22,16 +23,16 @@ class Controller extends BaseController
         $client = $sdk->createS3();
 
         $expiry = "+10 minutes";
+        $fileName = fake()->firstName;
 
         $cmd = $client->getCommand('PutObject', [
             'Bucket' => config('filesystems.disks.s3.bucket'),
-            'Key' => fake()->firstName,
-            'ACL' => 'public-read',
+            'Key' => $fileName,
         ]);
 
         $request = $client->createPresignedRequest($cmd, $expiry);
 
-        return response()->view('form', ['url' => (string)$request->getUri()], 201);
+        return response()->view('form', ['url' => (string)$request->getUri(), 'fileName' => $fileName], 201);
     }
 
     public function getList(): \Illuminate\Http\JsonResponse
