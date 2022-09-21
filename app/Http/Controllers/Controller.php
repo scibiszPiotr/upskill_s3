@@ -21,13 +21,13 @@ class Controller extends BaseController
             'version' => 'latest',
             'region' => env('AWS_DEFAULT_REGION'),
         ]);
-        $bucket = '';
+        $bucket = config('filesystems.disks.s3.bucket');
 
         $formInputs = ['acl' => 'public-read'];
 
         $options = [
             ['acl' => 'public-read'],
-            ['bucket' => config('filesystems.disks.s3.bucket')],
+            ['bucket' => $bucket],
             ['starts-with', '$key', 'user/eric/'],
         ];
 
@@ -44,8 +44,6 @@ class Controller extends BaseController
         $formAttributes = $postObject->getFormAttributes();
 
         $formInputs = $postObject->getFormInputs();
-        //
-        //dd($formAttributes, $formInputs);
 
         return response()->view('form', [
             'url' => $formAttributes['action'],
