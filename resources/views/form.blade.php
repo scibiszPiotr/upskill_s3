@@ -22,6 +22,7 @@
                     <input type="hidden" name="x-amz-date" value="{{$formAttr['X-Amz-Date']}}" />
                     <input type="hidden" name="policy" value="{{$formAttr['Policy']}}" />
                     <input type="hidden" name="x-amz-signature" value="{{$formAttr['X-Amz-Signature']}}" />
+                    <input type="hidden" name="X-Amz-Security-Token" value="{{$formAttr['X-Amz-Security-Token']}}" />
 
                     <div class="col-md-6">
                         <input type="file" name="file" class="form-control">

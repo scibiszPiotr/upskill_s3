@@ -23,12 +23,11 @@ class Controller extends BaseController
         ]);
         $bucket = config('filesystems.disks.s3.bucket');
 
-        $formInputs = ['acl' => 'public-read'];
+        $formInputs = ['key' => fake()->name];
 
         $options = [
-            ['acl' => 'public-read'],
             ['bucket' => $bucket],
-            ['starts-with', '$key', 'user/eric/'],
+            ['starts-with', '$key', 'all/'],
         ];
 
         $expires = '+2 hours';
@@ -48,7 +47,7 @@ class Controller extends BaseController
         return response()->view('form', [
             'url' => $formAttributes['action'],
             'formAttr' => $formInputs
-        ], 201);
+        ], 200);
     }
 
     public function getList(): \Illuminate\Http\JsonResponse
