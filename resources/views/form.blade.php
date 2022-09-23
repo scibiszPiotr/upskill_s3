@@ -13,10 +13,11 @@
         <div class="panel-heading"><h2>Form</h2></div>
         <div class="panel-body">
 
-            <form action="{{ $url }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ $url }}/{{ $formAttr['key']}}" method="POST" enctype="multipart/form-data">
                 <div class="row">
 
-                    <input type="hidden" name="key" value="{{ $formAttr['key']}}" />
+{{--                    <input type="hidden" name="key" value="{{ $formAttr['key']}}" />--}}
+{{--                    <input type="hidden" name="key" value="" />--}}
                     <input type="hidden" name="x-amz-algorithm" value="{{ $formAttr['X-Amz-Algorithm']}}" />
                     <input type="hidden" name="x-amz-credential" value="{{ $formAttr['X-Amz-Credential']}}" />
                     <input type="hidden" name="x-amz-date" value="{{$formAttr['X-Amz-Date']}}" />

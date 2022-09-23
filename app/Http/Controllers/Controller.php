@@ -23,11 +23,11 @@ class Controller extends BaseController
         ]);
         $bucket = config('filesystems.disks.s3.bucket');
 
-        $formInputs = ['key' => fake()->name];
+        $formInputs = ['key' => 'abcd'];
 
         $options = [
             ['bucket' => $bucket],
-            ['starts-with', '$key', 'all/'],
+            //['starts-with', '$key', 'all/'],
         ];
 
         $expires = '+2 hours';
