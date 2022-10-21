@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/s3/', function () {
     return view('welcome');
 });
 
 
-Route::get('/form', '\App\Http\Controllers\Controller@form');
-Route::get('/list', '\App\Http\Controllers\Controller@getList');
+Route::get('/s3/form', '\App\Http\Controllers\Controller@form');
+Route::get('/s3/list', '\App\Http\Controllers\Controller@getList');
